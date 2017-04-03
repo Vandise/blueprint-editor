@@ -5,7 +5,7 @@ export default () => {
   return (
     <ul>
       <li>
-        <TextCard name="this is a text card" />
+        <TextCard name="this is a text card" format="editor" />
       </li>
     </ul>
   );  

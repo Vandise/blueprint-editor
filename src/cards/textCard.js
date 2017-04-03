@@ -1,48 +1,27 @@
 import React, { Component, PropTypes } from 'react';
 import { DragSource } from 'react-dnd';
+import BaseCard from './baseCard';
+import cardMixin from '../util/mixins/card';
 import Constants from '../constants/';
+import DragDropEvents from '../util/cards/dragDropEvents';
 
-const boxSource = {
-  beginDrag(props) {
-    return {
-      name: props.name,
-    };
-  },
-
-  endDrag(props, monitor) {
-    const item = monitor.getItem();
-    const dropResult = monitor.getDropResult();
-
-    if (dropResult) {
-      window.alert( // eslint-disable-line no-alert
-        `You dropped ${item.name} into ${dropResult.name}!`,
-      );
-    }
-  },
-};
-
-@DragSource(Constants.cardTypes.TEXT_CARD, boxSource, (connect, monitor) => ({
+@DragSource(Constants.cardTypes.TEXT_CARD, DragDropEvents, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging(),
 }))
-export default class TextCard extends Component {
-  static propTypes = {
-    connectDragSource: PropTypes.func.isRequired,
-    isDragging: PropTypes.bool.isRequired,
-    name: PropTypes.string.isRequired,
+export default class TextCard extends cardMixin(BaseCard) {
+
+  renderers = {
+    editor: () => {
+      const { isDragging, connectDragSource } = this.props;
+      const { name } = this.props;
+      const opacity = isDragging ? 0.4 : 1;
+      return (
+        <div className='text-card' style={{ opacity }}>
+          {name}
+        </div>
+      );
+    },
   };
 
-  render() {
-    const { isDragging, connectDragSource } = this.props;
-    const { name } = this.props;
-    const opacity = isDragging ? 0.4 : 1;
-
-    return (
-      connectDragSource(
-        <div style={{ opacity }}>
-          {name}
-        </div>,
-      )
-    );
-  }
 }
