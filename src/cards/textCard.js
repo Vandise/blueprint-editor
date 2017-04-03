@@ -1,16 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { DragSource } from 'react-dnd';
-import ItemTypes from './ItemTypes';
-
-const style = {
-  border: '1px dashed gray',
-  backgroundColor: 'white',
-  padding: '0.5rem 1rem',
-  marginRight: '1.5rem',
-  marginBottom: '1.5rem',
-  cursor: 'move',
-  float: 'left',
-};
+import Constants from '../constants/';
 
 const boxSource = {
   beginDrag(props) {
@@ -31,11 +21,11 @@ const boxSource = {
   },
 };
 
-@DragSource(ItemTypes.BOX, boxSource, (connect, monitor) => ({
+@DragSource(Constants.cardTypes.TEXT_CARD, boxSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging(),
 }))
-export default class Box extends Component {
+export default class TextCard extends Component {
   static propTypes = {
     connectDragSource: PropTypes.func.isRequired,
     isDragging: PropTypes.bool.isRequired,
@@ -49,7 +39,7 @@ export default class Box extends Component {
 
     return (
       connectDragSource(
-        <div style={{ ...style, opacity }}>
+        <div style={{ opacity }}>
           {name}
         </div>,
       )
