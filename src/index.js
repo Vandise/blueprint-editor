@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './app';
 
 // if using redux for state management:
 // import { Provider } from 'react-redux';
@@ -11,6 +12,6 @@ const el = document.getElementById('app');
 
 export default ReactDOM.render(
   <div>
-    <p>Set up your application in src/index.js</p>
+    <App />
   </div>, el
 );
